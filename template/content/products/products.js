@@ -157,13 +157,35 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     //? VALIDAR FIRMA EMPLEADO
-    const input = document.getElementById('firmaEmpleado')
+    const firmaEmpleado = document.getElementById('firmaEmpleado')
+
     window.addEventListener('DOMContentLoaded', () => {
-        input.focus()
+        firmaEmpleado.focus()
     })
-    input.addEventListener('blur', () => {
-        input.focus()
+
+    firmaEmpleado.addEventListener('blur', () => {
+        firmaEmpleado.focus()
     })
+
+    firmaEmpleado.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault()
+
+        const codigo = firmaEmpleado.value.trim()
+        if (!codigo) return
+
+        console.log('Código escaneado:', codigo)
+
+        // 👉 AQUÍ TU LÓGICA
+        // validar(codigo)
+        // enviarAPI(codigo)
+        // buscarEmpleado(codigo)
+
+        // 3️⃣ Limpiar SOLO cuando ya llegó otro escaneo
+        firmaEmpleado.value = ''
+    }
+})
+
 
 
     //? IMPRIMIR CONSUMO

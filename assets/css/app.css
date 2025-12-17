@@ -69,11 +69,17 @@
 
 .text-infoDash {
     color: #e89c00;
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-size: 1.5rem;
 }
 
 /* ===== PRODUCTOS ===== */
+
+.textFirma {
+    font-size: 1.3rem;
+    color: #6B7280;
+    font-weight: bold;
+}
+
 #firmaEmpleado {
     background: #ffffff;
     border: none;

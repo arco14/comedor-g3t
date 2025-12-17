@@ -7,10 +7,9 @@
                     &copy; GRUPO 3T.</a></strong>
             </div>
         </footer>
-        <script src="../../comedor/assets/jquery/jquery-overlayScrollbars.min.js"></script>
+        <!-- Sweet Alert  -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="../../comedor/assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="../../comedor/assets/js/loadAPI.js"></script>
-        <script src="../../comedor/assets/devExtreme/components/dataGrid.js"></script>
         <script>
             const dateCopy = new Date()
             const formatDateCopy = moment(dateCopy).format('Y')

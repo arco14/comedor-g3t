@@ -1,5 +1,5 @@
 async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
-    let resStatus;
+    let resStatus
 
     try {
         const res = await fetch(strEndpoint, {
@@ -9,38 +9,27 @@ async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(jsonData),
-        });
+        })
 
-        resStatus = res.status;
+        resStatus = res.status
 
-        if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+        if (!res.ok) throw new Error(`HTTP error: ${res.status}`)
 
-        const data = await res.json();
+        const data = await res.json()
 
+        const result = data?.response
 
-        // 🔹 Aquí atrapamos errores enviados desde Node
-        if (data.success === false || data.message?.includes('does not exist')) {
-            Swal.fire({
-                title: 'Error!',
-                text: data.message || 'Error desconocido en el servidor.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
+        if (!result?.length) return
 
-        const result = data?.response?.[0];
-        if (!result?.length) return;
-
-        const { intEstatus, strDetalle } = result[0];
+        const { intEstatus, strDetalle } = result[0]
 
         if (intEstatus === 0) {
             Swal.fire({
                 text: strDetalle || 'Error desconocido',
                 icon: 'warning',
                 confirmButtonText: 'OK'
-            });
-            return;
+            })
+            return
         }
 
         if (blnAlert && data.success) {
@@ -50,23 +39,22 @@ async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
                 text: 'Los datos se procesaron con éxito',
                 confirmButtonText: 'Ok',
                 timer: 2000
-            });
+            })
         }
 
-        return data;
-
+        return data
     } catch (error) {
-        let errorMsg;
+        let errorMsg
+
         switch (resStatus) {
             case 401:
-                errorMsg = 'Token no proporcionado, vuelve a iniciar sesión.';
-                break;
+                errorMsg = 'Token no proporcionado, vuelve a iniciar sesión.'
+                break
             case 403:
-                errorMsg = 'Token caducado o sin permisos. Vuelve a iniciar sesión.';
-                break;
+                errorMsg = 'Token caducado o sin permisos. Vuelve a iniciar sesión.'
+                break
             default:
-                // 🔹 Mostramos el error del backend si existe
-                errorMsg = error.message || 'Error de servidor. Contacta a sistemas.';
+                errorMsg = 'Error de servidor. Contacta a sistemas.'
         }
 
         Swal.fire({
@@ -74,6 +62,6 @@ async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
             text: errorMsg,
             icon: 'error',
             confirmButtonText: 'OK'
-        });
+        })
     }
 }

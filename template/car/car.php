@@ -13,8 +13,8 @@
             <p class="h4 text-uppercase mb-0" style="color: #e89c00;">Total Productos: <span id="total" style="color: #6B7280;">0</span></p>
             <p class="h4 text-uppercase mb-0" style="color: #e89c00;">Precio: <span id="precio" style="color: #6B7280;">$ 0</span></p>
         </div>
-        <div class="btn btnConsumo">
-           <i class="fas fa-print"></i> Imprimir Consumo
+        <div class="btn btnConsumo text-uppercase"> 
+            Guardar
         </div>
     </div>
 </div>

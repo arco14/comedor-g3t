@@ -156,6 +156,15 @@ window.addEventListener("DOMContentLoaded", () => {
         renderCart()
     }
 
+    //? VALIDAR FIRMA EMPLEADO
+    const input = document.getElementById('firmaEmpleado')
+    window.addEventListener('DOMContentLoaded', () => {
+        input.focus()
+    })
+    input.addEventListener('blur', () => {
+        input.focus()
+    })
+
 
     //? IMPRIMIR CONSUMO
     $('.btnConsumo').click(() => {

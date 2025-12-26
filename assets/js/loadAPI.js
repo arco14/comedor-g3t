@@ -17,32 +17,32 @@ async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
 
         const data = await res.json()
 
-        const result = data?.response
+        const response = data?.response
 
-        if (!result?.length) return
+        // ✅ Debe ser array de tablas
+        if (!Array.isArray(response) || response.length === 0) {
+            return []
+        }
 
-        const { intEstatus, strDetalle } = result[0]
+        // 🔍 Buscar intEstatus en la PRIMERA TABLA
+        const firstTable = response[0]
 
-        if (intEstatus === 0) {
-            Swal.fire({
-                text: strDetalle || 'Error desconocido',
-                icon: 'warning',
-                confirmButtonText: 'OK'
-            })
-            return
+        if (Array.isArray(firstTable) && firstTable.length) {
+            const { intEstatus, strDetalle } = firstTable[0]
+
+            if (intEstatus === 0) {
+                alert(strDetalle || 'Error desconocido')
+                return []
+            }
         }
 
         if (blnAlert && data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito!',
-                text: 'Los datos se procesaron con éxito',
-                confirmButtonText: 'Ok',
-                timer: 2000
-            })
+            alert('Éxito')
         }
 
-        return data
+        // ✅ REGRESA TODAS LAS TABLAS
+        return response
+
     } catch (error) {
         let errorMsg
 
@@ -57,11 +57,7 @@ async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
                 errorMsg = 'Error de servidor. Contacta a sistemas.'
         }
 
-        Swal.fire({
-            title: 'Error!',
-            text: errorMsg,
-            icon: 'error',
-            confirmButtonText: 'OK'
-        })
+        alert(errorMsg)
+        return []
     }
 }

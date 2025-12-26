@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         Opcion: 'CE',
         Firma: firma
     }
-    
+    return
     const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonEmpleado, '', false)
     console.log(resData)
     const infoEmpleado = resData.response[0][0]

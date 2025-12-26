@@ -10,8 +10,8 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonTest, '', false)
         console.log(resData)
-        products = resData.response[0]
-
+        // return
+        products = resData[0]
         //? CARDS DE PRODUCTOS
         container = document.getElementById('productsContainer')
         products.forEach(product => {

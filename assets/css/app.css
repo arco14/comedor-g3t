@@ -252,3 +252,18 @@
         font-size: 1.6rem;
     }
 }
+
+.dx-gridbase-a11y-status-container {
+    display: none;
+}
+
+.dx-datagrid {
+    padding: 2.5rem;
+    border-radius: 9px;
+}
+.dx-fileuploader-wrapper {
+    padding: 7px!important;
+}
+.dx-fileuploader-input-wrapper {
+    padding: 7px 0!important;
+}

@@ -9,7 +9,8 @@
     <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="../../comedor/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../comedor/assets/css/app.css">
-
+    <script src="../../comedor/assets/bootstrap/js/bootstrap.min.js"></script>
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
@@ -22,9 +23,17 @@
     <!-- LLAMADO API -->
     <script src="../../comedor/assets/js/loadAPI.js" defer></script>
 
+     <!-- DevExtreme -->
+    <link rel="stylesheet" href="../../comedor/assets/devExtreme/css/dx_common.css">
+    <link rel="stylesheet" href="../../comedor/assets/devExtreme/css/dx_light.css">
+    <script src="../../comedor/assets/devExtreme/js/dx_all.js" defer></script>
+    <script src="../../comedor/assets/devExtreme/js/dx_messages.js" defer></script>
 
     <!-- MOMENT JS -->
     <script src="../../comedor/assets/moment/moment.min.js" defer></script>
+
+    <!-- Sweet Alert  -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
 </head>
 

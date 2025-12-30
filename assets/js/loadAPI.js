@@ -31,13 +31,23 @@ async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
             const { intEstatus, strDetalle } = firstTable[0]
 
             if (intEstatus === 0) {
-                alert(strDetalle || 'Error desconocido')
+                Swal.fire({
+                    text: strDetalle || 'Error desconocido',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                })
                 return []
             }
         }
 
         if (blnAlert && data.success) {
-            alert('Éxito')
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito!',
+                text: 'Los datos se procesaron correctamente!',
+                confirmButtonText: 'Ok',
+                timer: 2000
+            })
         }
 
         // ✅ REGRESA TODAS LAS TABLAS
@@ -56,8 +66,12 @@ async function loadAPI(strEndpoint, strMethod, jsonData, strToken, blnAlert) {
             default:
                 errorMsg = 'Error de servidor. Contacta a sistemas.'
         }
-
-        alert(errorMsg)
+        Swal.fire({
+            title: 'Error!',
+            text: errorMsg,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        })
         return []
     }
 }

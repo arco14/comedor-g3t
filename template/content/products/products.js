@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", () => {
     async function generarCard() {
         const jsonTest = {
             Stored: 'dbo.PA_ComedorG3T',
-            Opcion: 'C',
+            Opcion: 'CA',
             Usuario: 'christian.acosta'
         }
         const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonTest, '', false)

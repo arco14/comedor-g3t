@@ -45,7 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
     generarCard()
     
     //? DATA CARRITO
-    const cart = []
+    let cart = []
 
     // //? AGREGAR AL CARRITO
     function addToCart(product) {
@@ -62,7 +62,7 @@ window.addEventListener("DOMContentLoaded", () => {
             })
         }
         updateCartInfo()
-        renderCart()
+        renderCart(false)
     }
 
     function updateCartInfo() {
@@ -79,36 +79,41 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     //? RENDER CARRITO
-    function renderCart() {
+    function renderCart(blnLimpiar) {
         const cartContainer = document.getElementById('cartProducts')
-        if (!cartContainer) return
-        cartContainer.innerHTML = ''
-        cart.forEach(item => {
-            const row = document.createElement('div')
-            row.className = 'd-flex align-items-center justify-content-between mb-4  position-relative cardProductCart p-3'
-
-            row.innerHTML = `
-            <div class="d-flex align-items-center gap-2">
-                <img loading="lazy" src="${item.img}" class="rounded"
-                     style="width:100px; height:100px; object-fit:cover;">
-                <p class="fw-semibold h3 text-uppercase" style="color:#6B7280">${item.name} <span style="color: #e89c00;">$ ${item.price}</span></p>
-            </div>
-
-            <div class="d-flex align-items-center gap-2">
-                <button class="btn btn-sm btnActionCar px-3 btn-minus fw-semibold" data-id="${item.id}">−</button>
-                <p class="px-2 mb-0" style="font-size:1.7rem; color:#e89c00;">${item.qty}</p>
-                <button class="btn btn-sm btnActionCar px-3 btn-plus fw-semibold" data-id="${item.id}">+</button>
-                <button class="btn btnDeleteProd px-3 btn-remove fw-semibold" data-id="${item.id}">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>`
-            cartContainer.appendChild(row)
-        })
-        const total = $('#totalArticulo').val()
-        const precio = $('#totalPrecio').val()
-        $('#total').html(total)
-        $('#precio').html(`$ ${precio}`)
-        document.getElementById('arrayCarrito').value = JSON.stringify(cart)
+        if(blnLimpiar) {
+            cart = []
+        } else {
+            if (!cartContainer) return
+            cartContainer.innerHTML = ''
+            console.log(cart)
+            cart.forEach(item => {
+                const row = document.createElement('div')
+                row.className = 'd-flex align-items-center justify-content-between mb-4  position-relative cardProductCart p-3'
+    
+                row.innerHTML = `
+                <div class="d-flex align-items-center gap-2">
+                    <img loading="lazy" src="${item.img}" class="rounded"
+                         style="width:100px; height:100px; object-fit:cover;">
+                    <p class="fw-semibold h3 text-uppercase" style="color:#6B7280">${item.name} <span style="color: #e89c00;">$ ${item.price}</span></p>
+                </div>
+    
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btnActionCar px-3 btn-minus fw-semibold" data-id="${item.id}">−</button>
+                    <p class="px-2 mb-0" style="font-size:1.7rem; color:#e89c00;">${item.qty}</p>
+                    <button class="btn btn-sm btnActionCar px-3 btn-plus fw-semibold" data-id="${item.id}">+</button>
+                    <button class="btn btnDeleteProd px-3 btn-remove fw-semibold" data-id="${item.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>`
+                cartContainer.appendChild(row)
+            })
+            const total = $('#totalArticulo').val()
+            const precio = $('#totalPrecio').val()
+            $('#total').html(total)
+            $('#precio').html(`$ ${precio}`)
+            document.getElementById('arrayCarrito').value = JSON.stringify(cart)
+        }
     }
 
 
@@ -144,7 +149,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         updateCartInfo()
-        renderCart()
+        renderCart(false)
     })
 
     //? ELIMINAR PRODUCTO
@@ -152,7 +157,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const index = cart.findIndex(p => p.id == id)
         if (index !== -1) cart.splice(index, 1)
         updateCartInfo()
-        renderCart()
+        renderCart(false)
     }
 
     // DESAPARECER BOTON, PARA ESPERAR FIRMA EMPLEADO
@@ -188,6 +193,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 infoEmpleado.innerText = ''
                 document.getElementById('arrayEmpleado').value = ''
                 document.getElementById('btnGuardarConsumo').classList.add('d-none')
+                renderCart(true)
                 return
             }
         }

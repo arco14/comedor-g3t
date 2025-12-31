@@ -175,13 +175,6 @@ window.addEventListener("DOMContentLoaded", () => {
         if (!codigo) return
 
         console.log('Código escaneado:', codigo)
-
-        // 👉 AQUÍ TU LÓGICA
-        // validar(codigo)
-        // enviarAPI(codigo)
-        // buscarEmpleado(codigo)
-
-        // 3️⃣ Limpiar SOLO cuando ya llegó otro escaneo
         firmaEmpleado.value = ''
     }
 })

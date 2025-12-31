@@ -91,6 +91,7 @@ window.addEventListener("DOMContentLoaded", () => {
     
     // ACCIONES
     $('#agregarArticulos').click(() => {
+        idRow = 0
         $('#swActivo').dxSwitch('option', 'value', true)
         $('#textBoxNombre').dxTextBox('option', 'value', '')
         $('#textBoxClave').dxTextBox('option', 'value', '')

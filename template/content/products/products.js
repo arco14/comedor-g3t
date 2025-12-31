@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", () => {
     const url = CONFIG.API_URL
     let products, container
-
+    loadTextBox('#textBoxFirma', '', true, '', false, false, '')
     async function generarCard() {
         const jsonTest = {
             Stored: 'dbo.PA_ComedorG3T',
@@ -9,7 +9,6 @@ window.addEventListener("DOMContentLoaded", () => {
             Usuario: 'christian.acosta'
         }
         const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonTest, '', false)
-        console.log(resData)
         // return
         products = resData[0]
         //? CARDS DE PRODUCTOS
@@ -44,6 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     generarCard()
+    
     //? DATA CARRITO
     const cart = []
 
@@ -82,9 +82,7 @@ window.addEventListener("DOMContentLoaded", () => {
     function renderCart() {
         const cartContainer = document.getElementById('cartProducts')
         if (!cartContainer) return
-
         cartContainer.innerHTML = ''
-
         cart.forEach(item => {
             const row = document.createElement('div')
             row.className = 'd-flex align-items-center justify-content-between mb-4  position-relative cardProductCart p-3'
@@ -110,6 +108,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const precio = $('#totalPrecio').val()
         $('#total').html(total)
         $('#precio').html(`$ ${precio}`)
+        document.getElementById('arrayCarrito').value = JSON.stringify(cart)
     }
 
 
@@ -156,34 +155,41 @@ window.addEventListener("DOMContentLoaded", () => {
         renderCart()
     }
 
+    // DESAPARECER BOTON, PARA ESPERAR FIRMA EMPLEADO
+    document.getElementById('btnGuardarConsumo').classList.add('d-none')
+    
     //? VALIDAR FIRMA EMPLEADO
-    const firmaEmpleado = document.getElementById('firmaEmpleado')
-
-    window.addEventListener('DOMContentLoaded', () => {
-        firmaEmpleado.focus()
+    $('#textBoxFirma').dxTextBox({
+        // value: "",
+        // focusStateEnabled: true,
+        // onInitialized: function (e) {
+        //     e.component.focus();
+        // },
+        async onValueChanged(e) {
+            const firma = e.value
+            const jsonFirma = {
+                Stored: 'dbo.PA_ComedorG3T',
+                Opcion: 'EF',
+                Articulo: {
+                    FIRMA: firma
+                }
+            }
+            const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonFirma, '', false)
+            const dataEmpleado = resData[0][0]
+            const firmaEmpleado = document.getElementById('firmaEmpleado')
+            const infoEmpleado = document.getElementById('infoEmpleado')
+            if(resData[0].length > 0) {
+                firmaEmpleado.innerText = dataEmpleado.FIRMA
+                infoEmpleado.innerText = `${dataEmpleado.NOMBRE}, ${dataEmpleado.DEPARTAMENTO}`
+                document.getElementById('arrayEmpleado').value = JSON.stringify(dataEmpleado)
+                document.getElementById('btnGuardarConsumo').classList.remove('d-none')
+            } else {
+                firmaEmpleado.innerText = ''
+                infoEmpleado.innerText = ''
+                document.getElementById('arrayEmpleado').value = ''
+                document.getElementById('btnGuardarConsumo').classList.add('d-none')
+                return
+            }
+        }
     })
-
-    firmaEmpleado.addEventListener('blur', () => {
-        firmaEmpleado.focus()
-    })
-
-    firmaEmpleado.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault()
-
-        const codigo = firmaEmpleado.value.trim()
-        if (!codigo) return
-
-        console.log('Código escaneado:', codigo)
-        firmaEmpleado.value = ''
-    }
-})
-
-
-
-    //? IMPRIMIR CONSUMO
-    $('.btnConsumo').click(() => {
-        console.log(cart)
-    })
-
 })

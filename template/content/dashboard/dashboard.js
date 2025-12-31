@@ -7,7 +7,6 @@ window.addEventListener("DOMContentLoaded", () => {
             Usuario: 'christian.acosta'
         }
         const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonTest, '', false)
-        console.log(resData)
         const entregas = resData[0][0]
         const empleados = resData[1][0]
         $('#entregadosDia').text(entregas.ENTREGAS_DIA)

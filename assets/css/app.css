@@ -80,10 +80,10 @@
     font-weight: bold;
 }
 
-#firmaEmpleado {
+#textBoxFirma {
     background: #ffffff;
     border: none;
-    color: #e89c00;
+    color: #e89c00!;
     font-size: 1.5rem;
 }
 

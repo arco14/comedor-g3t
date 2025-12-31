@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../comedor/assets/img/icon3t.avif" type="image/x-icon">
     <title>COMEDOR GRUPO 3T</title>
 
     <!-- Bootstrap 5 -->

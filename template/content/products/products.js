@@ -191,6 +191,11 @@ window.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('arrayEmpleado').value = JSON.stringify(dataEmpleado)
                 document.getElementById('btnGuardarConsumo').classList.remove('d-none')
             } else {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'No se encuentra relacion con la firma agregada',
+                    showConfirmButton: true
+                })
                 firmaEmpleado.innerText = ''
                 infoEmpleado.innerText = ''
                 document.getElementById('arrayEmpleado').value = ''

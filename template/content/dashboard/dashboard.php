@@ -45,4 +45,4 @@
     </div>
 </section>
 
-<script src="../../../../comedor/template/content/dashboard/dashboard.js"></script>
+<script type="module" src="../../../../comedor/template/content/dashboard/dashboard.js"></script>

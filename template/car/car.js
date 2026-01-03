@@ -1,3 +1,4 @@
+import { generarCard } from "../../../comedor/template/content/dashboard/dashboard.js"
 window.addEventListener('DOMContentLoaded', async () => {
     const url = CONFIG.API_URL
     $('#btnGuardarConsumo').click(async () => {
@@ -33,8 +34,11 @@ window.addEventListener('DOMContentLoaded', async () => {
                         value: ""
                     }) 
                     document.getElementById('cartProducts').innerHTML = ''
+                    document.getElementById('total').innerHTML = ''
+                    document.getElementById('precio').innerHTML = ''
+                    generarCard()
                 }
             }
-        });
+        })
     })
 })

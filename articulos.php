@@ -56,9 +56,12 @@
     <fieldset class="border rounded p-4">
         <legend class="float-none w-auto">Articulos</legend>
         <div>
-            <div id="agregarArticulos" class="btn btn-sm btn-success px-3">
-                <span class="h3">+</span>
-            </div>
+             <button type="button" id="agregarArticulos" class="btn btn-sm btn-success" title="Agregar Nuevo Articulo">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button type="button" id="btnHome" class="btn btn-sm btn-primary" title="Ir al panel">
+                <i class="fas fa-house-user "></i>
+            </button>
         </div>
         <div id="dataGridArticulos" class="mt-4"></div>
     </fieldset>

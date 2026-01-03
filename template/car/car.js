@@ -28,15 +28,31 @@ window.addEventListener('DOMContentLoaded', async () => {
             cancelButtonText: "NO"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonConsumo, '', true)
+                const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonConsumo, '', false)
                 if(resData.length > 0) {
-                    $('#textBoxFirma').dxTextBox({
-                        value: ""
-                    }) 
-                    document.getElementById('cartProducts').innerHTML = ''
-                    document.getElementById('total').innerHTML = ''
-                    document.getElementById('precio').innerHTML = ''
-                    generarCard()
+                    const jsonTicket = {
+                        Stored: 'dbo.PA_ComedorG3T',
+                        Opcion: 'GTE',
+                        Articulo: {
+                            ID_TICKET: resData[0][0].Id
+                        }
+                    }
+                    const resTicket = await loadAPI(`${url}COMEDOR`, 'POST', jsonTicket, '', true)
+                    if(resTicket[0].length > 0 || resTicket[1][0].TOTAL !== null) {
+                        $('#textBoxFirma').dxTextBox({
+                            value: ""
+                        }) 
+                        document.getElementById('cartProducts').innerHTML = ''
+                        document.getElementById('total').innerHTML = ''
+                        document.getElementById('precio').innerHTML = ''
+                        generarCard()
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No se encuentra relación con el número de gafete!',
+                        timer: 3000
+                    })
                 }
             }
         })

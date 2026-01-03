@@ -1,4 +1,4 @@
-<section class="container dashboard">
+<section class="dashboard px-5">
     <div class="row g-3">
         <!-- CARD 1 -->
         <div class="col-12 col-md-6 col-lg-4">

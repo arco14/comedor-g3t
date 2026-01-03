@@ -86,7 +86,6 @@ window.addEventListener("DOMContentLoaded", () => {
         } else {
             if (!cartContainer) return
             cartContainer.innerHTML = ''
-            console.log(cart)
             cart.forEach(item => {
                 const row = document.createElement('div')
                 row.className = 'd-flex align-items-center justify-content-between mb-4  position-relative cardProductCart p-3'
@@ -95,7 +94,10 @@ window.addEventListener("DOMContentLoaded", () => {
                 <div class="d-flex align-items-center gap-2">
                     <img loading="lazy" src="${item.img}" class="rounded"
                          style="width:100px; height:100px; object-fit:cover;">
-                    <p class="fw-semibold h3 text-uppercase" style="color:#6B7280">${item.name} <span style="color: #e89c00;">$ ${item.price}</span></p>
+                    <div>
+                        <p class="fw-semibold h4 text-uppercase" style="color:#6B7280">${item.name}</p>
+                        <p class="h4" style="color: #e89c00;">$ ${item.price}</span>
+                    </div>
                 </div>
     
                 <div class="d-flex align-items-center gap-2">
@@ -192,6 +194,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 firmaEmpleado.innerText = ''
                 infoEmpleado.innerText = ''
                 document.getElementById('arrayEmpleado').value = ''
+                document.getElementById('cartProducts').innerHTML = ''
                 document.getElementById('btnGuardarConsumo').classList.add('d-none')
                 renderCart(true)
                 return

@@ -38,7 +38,34 @@ window.addEventListener('DOMContentLoaded', async () => {
                         }
                     }
                     const resTicket = await loadAPI(`${url}COMEDOR`, 'POST', jsonTicket, '', true)
-                    if(resTicket[0].length > 0 || resTicket[1][0].TOTAL !== null) {
+                    const dataArticulos = resTicket[0]
+                    const totalArticulos = resTicket[1][0]
+                    if(resTicket[0].length > 0 || totalArticulos.TOTAL !== null) {
+                        // ENVIAR DATOS DEL TICKET A PHP 
+                        const articulos = dataArticulos.map(art => ({
+                            ARTICULOS: art.ARTICULOS,
+                            CANTIDAD: art.CANTIDAD,
+                            FIRMA: art.FIRMA,
+                            NOMBRE_EMPLEADO: art.NOMBRE_EMPLEADO,
+                            PRECIO: art.PRECIO
+                        }))
+                        fetch('../../../comedor/ticket.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    ARTICULOS: articulos,
+                                    TOTAL: totalArticulos.TOTAL
+                                })
+                            })
+                            .then(res => res.text())
+                            .then(data => {
+                                console.log(data)
+                            })
+                            .catch(err => {
+                                console.error(err)
+                        })
                         $('#textBoxFirma').dxTextBox({
                             value: ""
                         }) 

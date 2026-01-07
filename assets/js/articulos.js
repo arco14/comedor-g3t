@@ -32,8 +32,6 @@ window.addEventListener("DOMContentLoaded", () => {
     loadTextBox('#textBoxNombre', '', true, 'Ingresa el nombre', false, false)
     loadTextBox('#textBoxClave', '', true, 'Ingresa la clave', false, false)
     loadNumberBox('#numberBoxPrecio', 'requerido', false, '$ 0', '$ #0.##', false, 999999999, 1, true)
-    loadTextBox('#textBoxImagen', '', true, 'Ingresa el nombre de la imagen', false, false)
-    loadButton('#btnGuardar', 'Guardar', 'success', false, true, false, '', '')
     
     // FUNCIONES
     async function generarGrid(opcion) {
@@ -56,7 +54,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 true,
                 'gridSatateArticulos', {
                     onSelectionChanged(e) {
-                        console.log(e)
                         const data = e.selectedRowsData[0]
                         idRow = data.id
                         $('#swActivo').dxSwitch({
@@ -68,14 +65,13 @@ window.addEventListener("DOMContentLoaded", () => {
                             value: data.NOMBRE
                         })
                         $('#textBoxClave').dxTextBox({
-                            value: data.CLAVE
+                            value: data.CLAVE,
+                            readOnly: true
                         })
                         $('#numberBoxPrecio').dxNumberBox({
                             value: data.PRECIO
                         })
-                        $('#textBoxImagen').dxTextBox({
-                            value: data.IMG
-                        })
+                        $('#contenedorImgFile').addClass('d-none')
                     },
                     onRowDblClick(e) {
                         if (blnDblClickGrid) {
@@ -94,36 +90,51 @@ window.addEventListener("DOMContentLoaded", () => {
         idRow = 0
         $('#swActivo').dxSwitch('option', 'value', true)
         $('#textBoxNombre').dxTextBox('option', 'value', '')
-        $('#textBoxClave').dxTextBox('option', 'value', '')
+        $('#textBoxClave').dxTextBox({
+            value: '', 
+            readOnly: false
+        })
         $('#numberBoxPrecio').dxNumberBox('option', 'value', '')
-        $('#textBoxImagen').dxTextBox('option', 'value', '')
+        $('#contenedorImgFile').removeClass('d-none')
+        $('#fileImge').val('')
         modal.show()
     })
 
-    $('#btnGuardar').dxButton({
-        async onClick() {
-            const activo = $('#swActivo').dxSwitch('option', 'value')
-            const nombre = $('#textBoxNombre').dxTextBox('option', 'value')
-            const clave = $('#textBoxClave').dxTextBox('option', 'value')
-            const precio = $('#numberBoxPrecio').dxNumberBox('option', 'value')
-            const imagen = $('#textBoxImagen').dxTextBox('option', 'value')
-            const jsonGuardarArticulo = {
-                Stored: 'dbo.PA_ComedorG3T',
-                Opcion: 'GA',
-                Articulo: {
-                    ID: idRow,
-                    NOMBRE: nombre,
-                    CLAVE: clave, 
-                    PRECIO: precio,
-                    IMAGEN: imagen, 
-                    ACTIVO: activo
-                }
+    $('#btnGuardar').click(async () => {
+        const activo = $('#swActivo').dxSwitch('option', 'value')
+        const nombre = $('#textBoxNombre').dxTextBox('option', 'value')
+        const clave = $('#textBoxClave').dxTextBox('option', 'value')
+        const precio = $('#numberBoxPrecio').dxNumberBox('option', 'value')
+        const fileImg = document.getElementById("fileImge")
+        const formData = new FormData()
+        const nombreImagen = fileImg.files[0].name
+        if (fileImg.files.length > 0) {
+            formData.append("fileImg", fileImg.files[0]);
+        }
+        fetch("../../../comedor/subir.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(resp => {
+            console.log(resp)
+        })
+        const jsonGuardarArticulo = {
+            Stored: 'dbo.PA_ComedorG3T',
+            Opcion: 'GA',
+            Articulo: {
+                ID: idRow,
+                NOMBRE: nombre,
+                CLAVE: clave, 
+                PRECIO: precio,
+                IMAGEN: nombreImagen, 
+                ACTIVO: activo
             }
-            const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonGuardarArticulo, '', true)
-            if(resData.length > 0) {
-                modal.hide()
-                generarGrid('CA')
-            }
+        }
+        const resData = await loadAPI(`${url}COMEDOR`, 'POST', jsonGuardarArticulo, '', true)
+        if(resData.length > 0) {
+            modal.hide()
+            generarGrid('CA')
         }
     })
 })

@@ -23,30 +23,32 @@
                     aria-label="Close"
                 ></button>
             </div>
-            <div class="modal-body row">
-                <div class="col-12 d-flex justify-content-end gap-2">
-                    <label for="swActivo" class="form-label">Activo</label>
-                    <div id="swActivo"></div>
-                </div>
-                 <div class="mt-3 col-12">
-                    <label for="textBoxNombre" class="form-label">Nombre</label>
-                    <div id="textBoxNombre"></div>
-                </div>
-                 <div class="mt-3 col-sm-12 col-md-6">
-                    <label for="textBoxClave" class="form-label">Clave</label>
-                    <div id="textBoxClave"></div>
-                </div>
-                 <div class="mt-3 col-sm-12 col-md-6">
-                    <label for="numberBoxPrecio" class="form-label">Precio</label>
-                    <div id="numberBoxPrecio"></div>
-                </div>
-                <div class="mt-3 col-12">
-                    <label for="textBoxImagen" class="form-label">Imagen</label>
-                    <div id="textBoxImagen"></div>
-                </div>
+            <div class="modal-body">
+                <form class="row" enctype="multipart/form-data">
+                    <div class="col-12 d-flex justify-content-end gap-2">
+                        <label for="swActivo" class="form-label">Activo</label>
+                        <div id="swActivo"></div>
+                    </div>
+                     <div class="mt-3 col-12">
+                        <label for="textBoxNombre" class="form-label">Nombre</label>
+                        <div id="textBoxNombre"></div>
+                    </div>
+                     <div class="mt-3 col-sm-12 col-md-6">
+                        <label for="textBoxClave" class="form-label">Clave</label>
+                        <div id="textBoxClave"></div>
+                    </div>
+                     <div class="mt-3 col-sm-12 col-md-6">
+                        <label for="numberBoxPrecio" class="form-label">Precio</label>
+                        <div id="numberBoxPrecio"></div>
+                    </div>
+                    <div id="contenedorImgFile" class="mt-3 col-12">
+                        <label for="fileImge">Imagen</label>
+                        <input class="form-control mt-2" type="file" id="fileImge" name="fileImg">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <div id="btnGuardar"></div>
+                <button id="btnGuardar" type="submit" class="btn btn-success">Guardar</button>
             </div>
         </div>
     </div>

@@ -21,24 +21,30 @@
 
             /* ===== ENCABEZADO ===== */
             $printer->setJustification(Printer::JUSTIFY_CENTER);
-            $printer->text("Comodor G3T\n");
+            $printer->text("Comedor G3T\n");
             $printer->text($formatoFecha);
             $printer->feed();
 
+            /* ===== EMPLEADO ===== */
+            $firma = $data['ARTICULOS'][0]['FIRMA'];
+            $empleado = $data['ARTICULOS'][0]['NOMBRE_EMPLEADO'];
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text($firma . " " . $empleado);
+            $printer->text("\n");
+            $printer->text("\n");
+
             /* ===== CUERPO ===== */
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("ARTICULO      CANT  PRECIO\n");
+            $printer->text("ARTICULO         CANT     PRECIO\n");
             $printer->text("--------------------------------\n");
 
             foreach ($articulos as $art) {
-
-                $nombre = substr($art['ARTICULOS'], 0, 12); // limitar ancho
+                $nombre = substr($art['ARTICULOS'], 0, 16); // máximo 16
                 $cant = $art['CANTIDAD'];
                 $precio = number_format($art['PRECIO'], 2);
 
-                // Formato alineado
-                $linea = str_pad($nombre, 14);
-                $linea .= str_pad($cant, 6, ' ', STR_PAD_LEFT);
+                $linea  = str_pad($nombre, 16);                  
+                $linea .= str_pad($cant, 6, ' ', STR_PAD_LEFT);  
                 $linea .= str_pad('$'.$precio, 10, ' ', STR_PAD_LEFT);
 
                 $printer->text($linea . "\n");
@@ -49,9 +55,10 @@
             $printer->setEmphasis(true);
             $printer->text("TOTAL: $" . number_format($total, 2) . "\n");
             $printer->setEmphasis(false);
+            $printer->text("\n");
 
             /* ===== FINAL ===== */
-            $printer->feed(2);
+            $printer->feed(5);
             $printer->cut();
             $printer->close();
 
@@ -65,4 +72,5 @@
                 'ok' => false,
                 'error' => $e->getMessage()
             ]);
+        }
     }

@@ -2,7 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // VARIABLES
     const url = CONFIG.API_URL
     let idRow = 0
-    let blnDblClickGrid
+    let blnDblClickGrid, nombreImagen
     const arrayArticulos = [{
         dataField: 'NOMBRE',
         caption: 'Nombre',
@@ -107,18 +107,20 @@ window.addEventListener("DOMContentLoaded", () => {
         const precio = $('#numberBoxPrecio').dxNumberBox('option', 'value')
         const fileImg = document.getElementById("fileImge")
         const formData = new FormData()
-        const nombreImagen = fileImg.files[0].name
-        if (fileImg.files.length > 0) {
-            formData.append("fileImg", fileImg.files[0]);
-        }
-        fetch("../../../comedor/subir.php", {
-            method: "POST",
-            body: formData
-        })
-        .then(res => res.json())
-        .then(resp => {
-            console.log(resp)
-        })
+        if(fileImg.files[0] !== undefined) {
+            nombreImagen = fileImg.files[0].name
+            if (fileImg.files.length > 0) {
+                formData.append("fileImg", fileImg.files[0]);
+            }
+            fetch("../../../comedor/subir.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json())
+            .then(resp => {
+                console.log(resp)
+            })
+        } 
         const jsonGuardarArticulo = {
             Stored: 'dbo.PA_ComedorG3T',
             Opcion: 'GA',
